@@ -6,7 +6,7 @@ PaintCursor::PaintCursor(unsigned char maxWidth) {
 }
 
 void paint() {
-  
+  //TODO: implement this
 }
 
 void PaintCursor::increaseWidth() {

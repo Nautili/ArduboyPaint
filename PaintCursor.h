@@ -1,6 +1,12 @@
 #ifndef PAINT_CURSOR_H
 #define PAINT_CURSOR_H
 
+/*
+ * Contains position and width for the cursor.
+ * Note: This is separate from the Brush class which only
+ *       describes how a brush will paint.
+ */
+
 class PaintCursor {
   public:
     unsigned char x;
