@@ -1,8 +1,8 @@
 #ifndef BRUSH_H
 #define BRUSH_H
 
+#include "PaintCursor.h"
 class Arduboy;
-class PaintCursor;
 
 /*
  * Abstract brush class. 
@@ -13,6 +13,7 @@ class Brush {
     Brush(Arduboy& arduboy);
     virtual ~Brush();
     virtual void paint(PaintCursor) = 0;
+    virtual void paintIcon(unsigned char x, unsigned char y) = 0;
   protected:
     Arduboy& arduboy;
 };

@@ -1,6 +1,5 @@
-#include "Arduboy.h"
-#include "PaintCursor.h"
 #include "Brush.h"
+#include "Arduboy.h"
 
 Brush::Brush(Arduboy& arduboy) : arduboy(arduboy) {
   

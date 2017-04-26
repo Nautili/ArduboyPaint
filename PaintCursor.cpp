@@ -1,5 +1,5 @@
-#include <Arduino.h>
 #include "PaintCursor.h"
+#include <Arduino.h>
 
 PaintCursor::PaintCursor(unsigned char maxWidth) {
   this->maxWidth = maxWidth;

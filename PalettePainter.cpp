@@ -1,8 +1,8 @@
+#include "PalettePainter.h"
 #include "Palette.h"
 #include "Arduboy.h"
-#include "PalettePainter.h"
 
-PalettePainter::PalettePainter(Palette& palette) : palette(palette) {
+PalettePainter::PalettePainter(Arduboy& arduboy, Palette& palette) : arduboy(arduboy), palette(palette) {
   
 }
 

@@ -9,7 +9,7 @@ Arduboy arduboy;
 
 PaintCursor paintCursor(HEIGHT);
 Palette palette;
-PalettePainter palettePainter(palette);
+PalettePainter palettePainter(arduboy, palette);
 
 void handleInputs() {
   //TODO: handle input delays
@@ -49,26 +49,35 @@ void handleInputs() {
   }
 }
 
-void updateDisplay() {
+/*
+ * Register brushes here
+ */
+void initializeBrushes() {
+  for(int i = 0; i <= 16; ++i) {
+    palette.addBrush(new DitherBrush(arduboy, i));
+  }
+}
+
+void updateOverlay() {
   //TODO: Think this through
   palettePainter.paint();
   //paintCursor.paint();
 }
 
 void setup() {
+  initializeBrushes();
   arduboy.begin();
-  arduboy.setFrameRate(15);
-  //TODO: set up brushes
-  for(int i = 0; i < 16; ++i) {
-    //DitherBrush* d = new DitherBrush(arduboy, i);
-    palette.addBrush(new DitherBrush(arduboy, i));
-  }
+  arduboy.setFrameRate(60);
   arduboy.clear();
   arduboy.display();
 }
 
 void loop() {
+  if(!arduboy.nextFrame()) {
+    return;
+  }
+  
   handleInputs();
-  //updateDisplay();
+  //updateOverlay();
   arduboy.display();
 }

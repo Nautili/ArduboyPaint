@@ -1,6 +1,6 @@
+#include "Palette.h"
 #include "Brush.h"
 #include <Arduino.h>
-#include "Palette.h"
 
 Palette::Palette(){
   numBrushes = 0;
