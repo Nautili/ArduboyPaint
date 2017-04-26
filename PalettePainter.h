@@ -9,7 +9,7 @@ class PalettePainter {
     PalettePainter(Palette& palette);
     void paint();
   private:
-    const Palette& palette;
+    Palette& palette;
     //TODO: some notion of state (animation, etc)
 };
 

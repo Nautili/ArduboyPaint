@@ -3,6 +3,9 @@
 
 PaintCursor::PaintCursor(unsigned char maxWidth) {
   this->maxWidth = maxWidth;
+  x = 0;
+  y = 0;
+  width = 8;
 }
 
 void paint() {

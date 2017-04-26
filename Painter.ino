@@ -1,5 +1,6 @@
 #include "Arduboy.h"
 #include "Brush.h"
+#include "DitherBrush.h"
 #include "Palette.h"
 #include "PalettePainter.h"
 #include "PaintCursor.h"
@@ -57,10 +58,17 @@ void updateDisplay() {
 void setup() {
   arduboy.begin();
   arduboy.setFrameRate(15);
+  //TODO: set up brushes
+  for(int i = 0; i < 16; ++i) {
+    //DitherBrush* d = new DitherBrush(arduboy, i);
+    palette.addBrush(new DitherBrush(arduboy, i));
+  }
+  arduboy.clear();
   arduboy.display();
 }
 
 void loop() {
   handleInputs();
-  updateDisplay();
+  //updateDisplay();
+  arduboy.display();
 }

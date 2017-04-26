@@ -3,12 +3,17 @@
 #include "Palette.h"
 
 Palette::Palette(){
+  numBrushes = 0;
+  brushIndex = 0;
+}
 
+void Palette::addBrush(Brush* brush) {
+  brushes[numBrushes] = brush;
+  ++numBrushes;
 }
 
 void Palette::selectNext() {
-  //TODO: Fill this in once constructor is finished
-  //need to know how many brushes ahead of time?
+  brushIndex = min(brushIndex + 1, numBrushes - 1);
 }
 
 void Palette::selectPrev() {

@@ -1,6 +1,7 @@
 #ifndef BRUSH_H
 #define BRUSH_H
 
+class Arduboy;
 class PaintCursor;
 
 /*
@@ -9,9 +10,11 @@ class PaintCursor;
  */
 class Brush {
   public:
-    Brush();
-    ~Brush();
+    Brush(Arduboy& arduboy);
+    virtual ~Brush();
     virtual void paint(PaintCursor) = 0;
+  protected:
+    Arduboy& arduboy;
 };
 
 #endif
