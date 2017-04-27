@@ -1,22 +1,22 @@
-#include "PaintCursor.h"
+#include "Cursor.h"
 #include <Arduino.h>
 
-PaintCursor::PaintCursor(unsigned char maxWidth) {
+Cursor::Cursor(unsigned char maxWidth) {
   this->maxWidth = maxWidth;
   x = 0;
   y = 0;
   width = 8;
 }
 
-void paint() {
+void Cursor::paint() {
   //TODO: implement this
 }
 
-void PaintCursor::increaseWidth() {
+void Cursor::increaseWidth() {
   width = min(width * 2, maxWidth);
 }
 
-void PaintCursor::decreaseWidth() {
+void Cursor::decreaseWidth() {
   width = max(width / 2, 1);
 }
 

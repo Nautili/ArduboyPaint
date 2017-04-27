@@ -1,5 +1,5 @@
-#ifndef PAINT_CURSOR_H
-#define PAINT_CURSOR_H
+#ifndef CURSOR_H
+#define CURSOR_H
 
 /*
  * Contains position and width for the cursor.
@@ -7,13 +7,13 @@
  *       describes how a brush will paint.
  */
 
-class PaintCursor {
+class Cursor {
   public:
     unsigned char x;
     unsigned char y;
     unsigned char width;
 
-    PaintCursor(unsigned char width);
+    Cursor(unsigned char width);
     void paint();
     void increaseWidth();
     void decreaseWidth();

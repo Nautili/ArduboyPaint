@@ -10,9 +10,11 @@ class PalettePainter {
   public:
     PalettePainter(Arduboy& arduboy, Palette& palette);
     void paint();
+    int getPaletteWidth();
   private:
     Arduboy& arduboy;
     Palette& palette;
+    static const int paletteWidth = 12;
     //TODO: some notion of state (animation, etc)
 };
 

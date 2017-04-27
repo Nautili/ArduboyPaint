@@ -3,16 +3,33 @@
 #include "DitherBrush.h"
 #include "Palette.h"
 #include "PalettePainter.h"
-#include "PaintCursor.h"
+#include "Cursor.h"
+#include "CursorPainter.h"
+
+#define ON true
+#define OFF false
 
 Arduboy arduboy;
 
-PaintCursor paintCursor(HEIGHT);
+Cursor cursor(HEIGHT);
+CursorPainter cursorPainter(arduboy, cursor);
 Palette palette;
 PalettePainter palettePainter(arduboy, palette);
 
+static const int FRAME_RATE = 60;
+static const int CURSOR_MOVEMENT_DELAY = 20;
+static const float CURSOR_FLASH_RATE = 1;
+static const int MAX_CURSOR_CYCLES = 6;
+static const int PALETTE_WIDTH = palettePainter.getPaletteWidth();
+
+int cursorCycles = 0;
+
 void handleInputs() {
-  //TODO: handle input delays
+  if(arduboy.buttonsState() > 0) {
+    cursorPainter.set(OFF);
+    cursorCycles = 0;
+  }
+  
   if(arduboy.pressed(A_BUTTON)) {
     //TODO: update menu state
     //animate menu cursor
@@ -24,28 +41,32 @@ void handleInputs() {
       palette.selectNext();
     }
     else if(arduboy.pressed(RIGHT_BUTTON)) {
-      paintCursor.increaseWidth();
+      cursor.increaseWidth();
     }
     else if(arduboy.pressed(LEFT_BUTTON)) {
-      paintCursor.decreaseWidth();
+      cursor.decreaseWidth();
     }
   }
   else {
     if(arduboy.pressed(B_BUTTON)) {
-      palette.getCurrentBrush()->paint(paintCursor);
+      palette.getCurrentBrush()->paint(cursor);
     }
     if(arduboy.pressed(UP_BUTTON)) {
-      paintCursor.y = max(paintCursor.y - 1, 0);
+      cursor.y = max(cursor.y - 1, 0);
     }
     if(arduboy.pressed(DOWN_BUTTON)) {
-      paintCursor.y = min(paintCursor.y + 1, HEIGHT - paintCursor.width);
+      cursor.y = min(cursor.y + 1, HEIGHT - cursor.width);
     }
     if(arduboy.pressed(LEFT_BUTTON)) {
-      paintCursor.x = max(paintCursor.x - 1, 0);
+      cursor.x = max(cursor.x - 1, 0);
     }
     if(arduboy.pressed(RIGHT_BUTTON)) {
-      paintCursor.x = min(paintCursor.x + 1, WIDTH - paintCursor.width);
+      cursor.x = min(cursor.x + 1, WIDTH - (cursor.width + PALETTE_WIDTH));
     }
+  }
+
+  if(arduboy.buttonsState() > 0) {
+    cursorPainter.set(ON);
   }
 }
 
@@ -59,15 +80,17 @@ void initializeBrushes() {
 }
 
 void updateOverlay() {
-  //TODO: Think this through
-  palettePainter.paint();
-  //paintCursor.paint();
+  if(arduboy.everyXFrames(FRAME_RATE / CURSOR_FLASH_RATE) && cursorCycles < MAX_CURSOR_CYCLES) {
+    cursorPainter.paint();
+    ++cursorCycles;
+  }
+  //palettePainter.paint();
 }
 
 void setup() {
   initializeBrushes();
   arduboy.begin();
-  arduboy.setFrameRate(60);
+  arduboy.setFrameRate(FRAME_RATE);
   arduboy.clear();
   arduboy.display();
 }
@@ -76,8 +99,8 @@ void loop() {
   if(!arduboy.nextFrame()) {
     return;
   }
-  
+
+  updateOverlay();
   handleInputs();
-  //updateOverlay();
   arduboy.display();
 }

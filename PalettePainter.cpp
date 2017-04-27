@@ -10,3 +10,7 @@ void PalettePainter::paint() {
   //TODO: implement this
 }
 
+int PalettePainter::getPaletteWidth() {
+  return paletteWidth;
+}
+

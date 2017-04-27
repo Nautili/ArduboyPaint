@@ -7,15 +7,15 @@ DitherBrush::DitherBrush(Arduboy& arduboy, unsigned char ditherLevel) : Brush(ar
   this->ditherLevel = ditherLevel;
 }
 
-void DitherBrush::paint(PaintCursor pc) {
-  int centerX = pc.x + pc.width / 2;
-  int centerY = pc.y + pc.width / 2;
+void DitherBrush::paint(Cursor pc) {
+  float centerX = pc.x + pc.width / 2;
+  float centerY = pc.y + pc.width / 2;
   for(int row = pc.y; row < pc.y + pc.width; ++row) {
     for(int col = pc.x; col < pc.x + pc.width; ++col) {
-      int distX = centerX - col;
-      int distY = centerY - row;
+      float distX = centerX - col;
+      float distY = centerY - row;
       if(distX * distX + distY * distY <= pc.width * pc.width / 4) {
-        int color = ditherOrder[row % 4][col % 4] < ditherLevel ? 1 : 0;
+        int color = ditherOrder[row % 4][col % 4] < ditherLevel;
         arduboy.drawPixel(col, row, color);
       }
     }
@@ -23,6 +23,6 @@ void DitherBrush::paint(PaintCursor pc) {
 }
 
 void DitherBrush::paintIcon(unsigned char x, unsigned char y) {
-  
+  //TODO: Implement this
 }
 

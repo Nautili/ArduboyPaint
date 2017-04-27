@@ -6,7 +6,7 @@
 class DitherBrush : public Brush {
   public:
     DitherBrush(Arduboy& arduboy, unsigned char ditherLevel);
-    void paint(PaintCursor);
+    void paint(Cursor);
     void paintIcon(unsigned char x, unsigned char y);
   private:
     unsigned char ditherLevel;
