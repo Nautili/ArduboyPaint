@@ -9,11 +9,11 @@
 
 class Cursor {
   public:
-    unsigned char x;
-    unsigned char y;
-    unsigned char width;
+    char x;
+    char y;
+    char width;
 
-    Cursor(unsigned char x, unsigned char y);
+    Cursor(char x, char y);
     Cursor();
 };
 

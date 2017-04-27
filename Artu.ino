@@ -59,9 +59,14 @@ void handleInputs() {
     //handle cursor resizing
     if(cursorFramesHeld > CURSOR_RESIZE_DELAY * FRAME_RATE || cursorFramesHeld == 0) {
       if(arduboy.pressed(RIGHT_BUTTON)) {
-        ++cursor.width;
-        if((cursor.x + cursor.width > WIDTH - PALETTE_WIDTH) || (cursor.y + cursor.width > HEIGHT)) {
-          --cursor.width;
+        cursor.width = min(cursor.width + 1, HEIGHT);
+        
+        if(cursor.x + cursor.width > WIDTH - PALETTE_WIDTH) {
+          --cursor.x;
+        }
+        
+        if(cursor.y + cursor.width > HEIGHT) {
+          --cursor.y;
         }
       }
       if(arduboy.pressed(LEFT_BUTTON)) {
@@ -116,7 +121,7 @@ void handleInputs() {
  * Register brushes here
  */
 void initializeBrushes() {
-  for(int i = 0; i <= 16; ++i) {
+  for(int i = 16; i >= 0; --i) {
     palette.addBrush(new DitherBrush(arduboy, i));
   }
   //palette.addBrush(new GlitchBrush(arduboy));
