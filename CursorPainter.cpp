@@ -16,7 +16,9 @@ void CursorPainter::paint() {
   cursorOn = !cursorOn;
   for(int col = cursor.x; col < cursor.x + cursor.width; ++col) {
     arduboy.drawPixel(col, cursor.y, 1 - arduboy.getPixel(col, cursor.y));
-    arduboy.drawPixel(col, cursor.y + cursor.width - 1, 1 - arduboy.getPixel(col, cursor.y + cursor.width - 1));
+    if(cursor.width > 1) {
+      arduboy.drawPixel(col, cursor.y + cursor.width - 1, 1 - arduboy.getPixel(col, cursor.y + cursor.width - 1));
+    }
   }
 
   for(int row = cursor.y + 1; row < cursor.y + cursor.width - 1; ++row) {
