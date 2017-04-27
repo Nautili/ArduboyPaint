@@ -13,9 +13,19 @@ class Brush {
     Brush(Arduboy& arduboy);
     virtual ~Brush();
     virtual void paint(Cursor) = 0;
-    virtual void paintIcon(unsigned char x, unsigned char y) = 0;
+
+    /*Paint 8x8 icon at location (x, y)*/
+    virtual void paintIcon(unsigned char x, unsigned char y);
   protected:
     Arduboy& arduboy;
+    static constexpr unsigned char defaultIcon[8][8] = {{1, 1, 1, 1, 1, 1, 1, 1},
+                                                        {1, 1, 0, 0, 0, 0, 0, 1},
+                                                        {1, 0, 1, 0, 0, 0, 0, 1},
+                                                        {1, 0, 0, 1, 0, 0, 0, 1},
+                                                        {1, 0, 0, 0, 1, 0, 0, 1},
+                                                        {1, 0, 0, 0, 0, 1, 0, 1},
+                                                        {1, 0, 0, 0, 0, 0, 1, 1},
+                                                        {1, 1, 1, 1, 1, 1, 1, 1}};
 };
 
 #endif

@@ -23,6 +23,11 @@ void DitherBrush::paint(Cursor pc) {
 }
 
 void DitherBrush::paintIcon(unsigned char x, unsigned char y) {
-  //TODO: Implement this
+  for(int row = 0; row < 8; ++row) {
+    for(int col = 0; col < 8; ++col) {
+      int color = ditherOrder[row % 4][col % 4] < ditherLevel;
+      arduboy.drawPixel(x + col, y + row, color);
+    }
+  }
 }
 

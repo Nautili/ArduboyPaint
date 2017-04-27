@@ -28,3 +28,11 @@ Brush* Palette::getCurrentBrush() {
   return getBrush(brushIndex);
 }
 
+int Palette::getNumBrushes() {
+  return numBrushes;
+}
+
+int Palette::getCurrentBrushIndex() {
+  return brushIndex;
+}
+

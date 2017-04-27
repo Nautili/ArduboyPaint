@@ -19,7 +19,7 @@ PalettePainter palettePainter(arduboy, palette);
 static const int FRAME_RATE = 60;
 static const int CURSOR_MOVEMENT_DELAY = 20;
 static const float CURSOR_FLASH_RATE = 1;
-static const int MAX_CURSOR_CYCLES = 6;
+static const int MAX_CURSOR_CYCLES = 7;
 static const int PALETTE_WIDTH = palettePainter.getPaletteWidth();
 
 int cursorCycles = 0;
@@ -31,9 +31,6 @@ void handleInputs() {
   }
   
   if(arduboy.pressed(A_BUTTON)) {
-    //TODO: update menu state
-    //animate menu cursor
-
     if(arduboy.pressed(UP_BUTTON)) {
       palette.selectPrev();
     }
@@ -84,7 +81,7 @@ void updateOverlay() {
     cursorPainter.paint();
     ++cursorCycles;
   }
-  //palettePainter.paint();
+  palettePainter.paint();
 }
 
 void setup() {

@@ -15,6 +15,8 @@ class Palette {
     void selectPrev();
     Brush* getBrush(int index);
     Brush* getCurrentBrush();
+    int getNumBrushes();
+    int getCurrentBrushIndex();
   private:
     Brush* brushes[MAX_BRUSHES];
     int numBrushes;
