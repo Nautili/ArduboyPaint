@@ -13,13 +13,8 @@ class Cursor {
     unsigned char y;
     unsigned char width;
 
-    Cursor(unsigned char x, unsigned char y, unsigned char width);
-    Cursor(unsigned char width);
-    void increaseWidth();
-    void decreaseWidth();
-    
-  private:
-    unsigned char maxWidth;
+    Cursor(unsigned char x, unsigned char y);
+    Cursor();
 };
 
 #endif

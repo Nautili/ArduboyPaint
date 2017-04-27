@@ -1,0 +1,9 @@
+A paint program for arduino.
+
+Controls:
+  Use D-pad to move cursor.
+  Press B to paint with current brush.
+  Hold A and press right/left to change brush size.
+  Hold A and press up/down to change brush.
+
+The design makes it easy to add and change brushes, but the program has not been optimized for memory, so adding much more currently causes instability.

@@ -8,7 +8,7 @@ FillBrush::FillBrush(Arduboy& arduboy, unsigned char color) : Brush(arduboy) {
 }
 
 void FillBrush::paint(Cursor pc) {
-    arduboy.fillScreen(color);
+  arduboy.fillScreen(color);
 }
 
 void FillBrush::paintIcon(unsigned char x, unsigned char y) {

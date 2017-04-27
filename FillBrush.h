@@ -3,6 +3,9 @@
 
 #include "Brush.h"
 
+/*
+ * Fills the canvas with a single color
+ */
 class FillBrush : public Brush {
   public:
     FillBrush(Arduboy& arduboy, unsigned char color);

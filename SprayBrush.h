@@ -3,6 +3,9 @@
 
 #include "Brush.h"
 
+/*
+ * Uses a gaussian distribution to color indivual pixels
+ */
 class SprayBrush : public Brush {
   public:
     SprayBrush(Arduboy& arduboy);

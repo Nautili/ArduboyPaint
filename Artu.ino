@@ -1,7 +1,7 @@
 #include "Arduboy.h"
 #include "Brush.h"
 #include "DitherBrush.h"
-#include "GlitchBrush.h"
+//#include "GlitchBrush.h"
 #include "FillBrush.h"
 #include "SprayBrush.h"
 #include "Palette.h"
@@ -14,7 +14,7 @@
 
 Arduboy arduboy;
 
-Cursor cursor(HEIGHT);
+Cursor cursor;
 CursorPainter cursorPainter(arduboy, cursor);
 Palette palette;
 PalettePainter palettePainter(arduboy, palette);
@@ -59,10 +59,13 @@ void handleInputs() {
     //handle cursor resizing
     if(cursorFramesHeld > CURSOR_RESIZE_DELAY * FRAME_RATE || cursorFramesHeld == 0) {
       if(arduboy.pressed(RIGHT_BUTTON)) {
-        cursor.increaseWidth();
+        ++cursor.width;
+        if((cursor.x + cursor.width > WIDTH - PALETTE_WIDTH) || (cursor.y + cursor.width > HEIGHT)) {
+          --cursor.width;
+        }
       }
       if(arduboy.pressed(LEFT_BUTTON)) {
-        cursor.decreaseWidth();
+        cursor.width = max(cursor.width - 1, 1);
       }
     }
 
@@ -116,7 +119,7 @@ void initializeBrushes() {
   for(int i = 0; i <= 16; ++i) {
     palette.addBrush(new DitherBrush(arduboy, i));
   }
-  palette.addBrush(new GlitchBrush(arduboy));
+  //palette.addBrush(new GlitchBrush(arduboy));
   palette.addBrush(new SprayBrush(arduboy));
   palette.addBrush(new FillBrush(arduboy, WHITE));
   palette.addBrush(new FillBrush(arduboy, BLACK));

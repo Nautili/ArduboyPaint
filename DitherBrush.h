@@ -3,6 +3,9 @@
 
 #include "Brush.h"
 
+/*
+ * Draws a dithered circle using a 4x4 ordered dither
+ */
 class DitherBrush : public Brush {
   public:
     DitherBrush(Arduboy& arduboy, unsigned char ditherLevel);

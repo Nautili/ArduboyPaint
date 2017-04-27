@@ -3,6 +3,9 @@
 
 #include "Brush.h"
 
+/*
+ * Continuously inverts the colors in the cursor creating a glitch effect
+ */
 class GlitchBrush : public Brush {
   public:
     GlitchBrush(Arduboy& arduboy);
