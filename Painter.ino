@@ -17,48 +17,87 @@ Palette palette;
 PalettePainter palettePainter(arduboy, palette);
 
 static const int FRAME_RATE = 60;
-static const int CURSOR_MOVEMENT_DELAY = 20;
+static const float CURSOR_MOVEMENT_DELAY = 0.1;
+static const float CURSOR_RESIZE_DELAY = 0.1;
 static const float CURSOR_FLASH_RATE = 1;
-static const int MAX_CURSOR_CYCLES = 7;
+static const int MAX_CURSOR_CYCLES = 5;
 static const int PALETTE_WIDTH = palettePainter.getPaletteWidth();
+static const float PALETTE_MOVEMENT_DELAY = 0.1;
 
 int cursorCycles = 0;
+int cursorFramesHeld = 0;
+int paletteFramesHeld = 0;
 
 void handleInputs() {
+  //reset cursor animation when any button is pressed
   if(arduboy.buttonsState() > 0) {
     cursorPainter.set(OFF);
     cursorCycles = 0;
   }
   
   if(arduboy.pressed(A_BUTTON)) {
-    if(arduboy.pressed(UP_BUTTON)) {
-      palette.selectPrev();
+    //handle palette selection
+    if(paletteFramesHeld == 0) {
+      if(arduboy.pressed(UP_BUTTON)) {
+        palette.selectPrev();
+      }
+      if(arduboy.pressed(DOWN_BUTTON)) {
+        palette.selectNext();
+      }
     }
-    else if(arduboy.pressed(DOWN_BUTTON)) {
-      palette.selectNext();
+
+    if(arduboy.pressed(UP_BUTTON) || arduboy.pressed(DOWN_BUTTON)) {
+      paletteFramesHeld = (paletteFramesHeld + 1) % (int)(PALETTE_MOVEMENT_DELAY * FRAME_RATE);
     }
-    else if(arduboy.pressed(RIGHT_BUTTON)) {
-      cursor.increaseWidth();
+    else {
+      paletteFramesHeld = 0;
     }
-    else if(arduboy.pressed(LEFT_BUTTON)) {
-      cursor.decreaseWidth();
+
+    //handle cursor resizing
+    if(cursorFramesHeld > CURSOR_RESIZE_DELAY * FRAME_RATE || cursorFramesHeld == 0) {
+      if(arduboy.pressed(RIGHT_BUTTON)) {
+        cursor.increaseWidth();
+      }
+      if(arduboy.pressed(LEFT_BUTTON)) {
+        cursor.decreaseWidth();
+      }
+    }
+
+    if((arduboy.buttonsState() & (UP_BUTTON | DOWN_BUTTON | RIGHT_BUTTON | LEFT_BUTTON)) > 0) {
+      ++cursorFramesHeld;
+    }
+    else {
+      cursorFramesHeld = 0;
     }
   }
   else {
+    //handle paint
     if(arduboy.pressed(B_BUTTON)) {
       palette.getCurrentBrush()->paint(cursor);
     }
-    if(arduboy.pressed(UP_BUTTON)) {
-      cursor.y = max(cursor.y - 1, 0);
+
+    //handle cursor movement
+    if(cursorFramesHeld >= CURSOR_MOVEMENT_DELAY * FRAME_RATE || cursorFramesHeld == 0) {
+      if(arduboy.pressed(UP_BUTTON)) {
+        cursor.y = max(cursor.y - 1, 0);
+      }
+      if(arduboy.pressed(DOWN_BUTTON)) {
+        cursor.y = min(cursor.y + 1, HEIGHT - cursor.width);
+      }
+      if(arduboy.pressed(LEFT_BUTTON)) {
+        cursor.x = max(cursor.x - 1, 0);
+      }
+      if(arduboy.pressed(RIGHT_BUTTON)) {
+        cursor.x = min(cursor.x + 1, WIDTH - (cursor.width + PALETTE_WIDTH));
+      }
     }
-    if(arduboy.pressed(DOWN_BUTTON)) {
-      cursor.y = min(cursor.y + 1, HEIGHT - cursor.width);
+
+    //check if button is still held down
+    if((arduboy.buttonsState() & (UP_BUTTON | DOWN_BUTTON | RIGHT_BUTTON | LEFT_BUTTON)) > 0) {
+      ++cursorFramesHeld;
     }
-    if(arduboy.pressed(LEFT_BUTTON)) {
-      cursor.x = max(cursor.x - 1, 0);
-    }
-    if(arduboy.pressed(RIGHT_BUTTON)) {
-      cursor.x = min(cursor.x + 1, WIDTH - (cursor.width + PALETTE_WIDTH));
+    else {
+      cursorFramesHeld = 0;
     }
   }
 

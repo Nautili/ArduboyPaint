@@ -13,10 +13,10 @@ void Cursor::paint() {
 }
 
 void Cursor::increaseWidth() {
-  width = min(width * 2, maxWidth);
+  width = min(width + 1, maxWidth);
 }
 
 void Cursor::decreaseWidth() {
-  width = max(width / 2, 1);
+  width = max(width - 1, 1);
 }
 
