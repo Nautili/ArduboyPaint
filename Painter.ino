@@ -1,6 +1,9 @@
 #include "Arduboy.h"
 #include "Brush.h"
 #include "DitherBrush.h"
+#include "GlitchBrush.h"
+#include "FillBrush.h"
+#include "SprayBrush.h"
 #include "Palette.h"
 #include "PalettePainter.h"
 #include "Cursor.h"
@@ -16,17 +19,17 @@ CursorPainter cursorPainter(arduboy, cursor);
 Palette palette;
 PalettePainter palettePainter(arduboy, palette);
 
-static const int FRAME_RATE = 60;
+static const unsigned char FRAME_RATE = 60;
 static const float CURSOR_MOVEMENT_DELAY = 0.1;
 static const float CURSOR_RESIZE_DELAY = 0.1;
 static const float CURSOR_FLASH_RATE = 1;
-static const int MAX_CURSOR_CYCLES = 5;
-static const int PALETTE_WIDTH = palettePainter.getPaletteWidth();
+static const unsigned char MAX_CURSOR_CYCLES = 5;
+static const unsigned char PALETTE_WIDTH = palettePainter.getPaletteWidth();
 static const float PALETTE_MOVEMENT_DELAY = 0.1;
 
-int cursorCycles = 0;
-int cursorFramesHeld = 0;
-int paletteFramesHeld = 0;
+unsigned char cursorCycles = 0;
+unsigned char cursorFramesHeld = 0;
+unsigned char paletteFramesHeld = 0;
 
 void handleInputs() {
   //reset cursor animation when any button is pressed
@@ -113,6 +116,11 @@ void initializeBrushes() {
   for(int i = 0; i <= 16; ++i) {
     palette.addBrush(new DitherBrush(arduboy, i));
   }
+  palette.addBrush(new GlitchBrush(arduboy));
+  palette.addBrush(new SprayBrush(arduboy));
+  palette.addBrush(new FillBrush(arduboy, WHITE));
+  palette.addBrush(new FillBrush(arduboy, BLACK));
+  
 }
 
 void updateOverlay() {
@@ -136,7 +144,7 @@ void loop() {
     return;
   }
 
-  updateOverlay();
   handleInputs();
+  updateOverlay();
   arduboy.display();
 }

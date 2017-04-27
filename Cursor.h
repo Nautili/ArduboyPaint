@@ -13,8 +13,8 @@ class Cursor {
     unsigned char y;
     unsigned char width;
 
+    Cursor(unsigned char x, unsigned char y, unsigned char width);
     Cursor(unsigned char width);
-    void paint();
     void increaseWidth();
     void decreaseWidth();
     

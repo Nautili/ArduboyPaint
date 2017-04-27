@@ -1,15 +1,15 @@
 #include "Cursor.h"
 #include <Arduino.h>
 
-Cursor::Cursor(unsigned char maxWidth) {
+Cursor::Cursor(unsigned char x, unsigned char y, unsigned char maxWidth) {
   this->maxWidth = maxWidth;
-  x = 0;
-  y = 0;
+  this->x = x;
+  this->y = y;
   width = 8;
 }
 
-void Cursor::paint() {
-  //TODO: implement this
+Cursor::Cursor(unsigned char maxWidth) : Cursor(0, 0, maxWidth) {
+
 }
 
 void Cursor::increaseWidth() {
