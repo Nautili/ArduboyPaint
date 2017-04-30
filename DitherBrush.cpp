@@ -1,5 +1,6 @@
 #include "DitherBrush.h"
 #include "Arduboy.h"
+#include "CircleIterator.h"
 
 constexpr unsigned char DitherBrush::ditherOrder[4][4];
 
@@ -8,17 +9,10 @@ DitherBrush::DitherBrush(Arduboy& arduboy, unsigned char ditherLevel) : Brush(ar
 }
 
 void DitherBrush::paint(Cursor pc) {
-  float centerX = pc.x + pc.width / 2;
-  float centerY = pc.y + pc.width / 2;
-  for(int row = pc.y; row < pc.y + pc.width; ++row) {
-    for(int col = pc.x; col < pc.x + pc.width; ++col) {
-      float distX = centerX - col;
-      float distY = centerY - row;
-      if(distX * distX + distY * distY <= pc.width * pc.width / 4) {
-        int color = ditherOrder[row % 4][col % 4] < ditherLevel;
-        arduboy.drawPixel(col, row, color);
-      }
-    }
+  CircleIterator iter(pc.width);
+  while(iter.next()) {
+    int color = ditherOrder[(pc.y + iter.y) % 4][(pc.x + iter.x) % 4] < ditherLevel;
+    arduboy.drawPixel(pc.x + iter.x, pc.y + iter.y, color);
   }
 }
 
