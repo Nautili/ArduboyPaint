@@ -1,9 +1,9 @@
 #include "CircleIterator.h"
 
-CircleIterator::CircleIterator(int width) {
-  this->width = width;
-  x = 1; //ignore outermost points for a smoother brush
-  y = 1;
+CircleIterator::CircleIterator(float width) {
+  this->width = width - 1;
+  x = 0;
+  y = 0;
   inCircle = false;
   quadrantsReturned = 0;
 }
@@ -26,12 +26,12 @@ bool CircleIterator::next() {
       }
   }
 
-  int radius = width / 2;
+  float radius = width / 2;
   if(inCircle) {
     ++x;
   }  
   if(x > radius) {
-    x = 1;
+    x = 0;
     ++y;
     inCircle = false;
   }
@@ -40,9 +40,9 @@ bool CircleIterator::next() {
   }
 
   if(!inCircle) {
-    int distX = radius;
-    int distY = radius - y;
-    while(distX * distX + distY * distY >= radius * radius && x < radius) {
+    float distX = radius;
+    float distY = radius - y;
+    while(distX * distX + distY * distY > radius * radius && x < radius) {
       ++x;
       --distX;
     }
