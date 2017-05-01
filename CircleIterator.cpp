@@ -9,8 +9,9 @@ CircleIterator::CircleIterator(float width) {
 }
 
 /*
- * Iterates to the next point inside a quadrant.
- * It's up to the user to decide how to use the quadrant
+ * Iterates to the next point inside a quadrant, then iterates to the mirrors
+ * in each of the other quadrant. This is definitely not the fastest, but it
+ * should be good enough.
  */
 bool CircleIterator::next() {
   if(quadrantsReturned > 0) {
