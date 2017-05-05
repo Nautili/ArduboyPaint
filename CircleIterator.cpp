@@ -41,11 +41,11 @@ bool CircleIterator::next() {
   }
 
   if(!inCircle) {
-    float distX = radius;
-    float distY = radius - y;
+    float distX = radius - 0.5;
+    float distY = radius - y - 0.5;
     while(distX * distX + distY * distY > radius * radius && x < radius) {
       ++x;
-      --distX;
+      distX -= 1;
     }
 
     inCircle = true;
